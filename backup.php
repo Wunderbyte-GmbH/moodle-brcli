@@ -17,6 +17,9 @@ require_once($CFG->dirroot . '/backup/util/includes/backup_includes.php');
 list($options, $unrecognized) = cli_get_params(array(
     'categoryid' => false,
     'destination' => '',
+    // harald.bamberger@donau-uni.ac.at 201909013 begin
+    'withoutusers' => false,
+    // harald.bamberger@donau-uni.ac.at 201909013 end
     'help' => false,
     ), array('h' => 'help'));
 
@@ -61,6 +64,14 @@ foreach ($courses as $cs) {
     $format = $bc->get_format();
     $type = $bc->get_type();
     $id = $bc->get_id();
+
+    // harald.bamberger@donau-uni.ac.at 201909013 begin
+    if( $options['withoutusers'] ) {
+      $bc->get_plan()->get_setting('users')->set_value(0);
+    }
+    //echo "\n\nwithusers: " . $bc->get_plan()->get_setting('users')->get_value() . "\n\n";
+    // harald.bamberger@donau-uni.ac.at 201909013 end
+    
     $users = $bc->get_plan()->get_setting('users')->get_value();
     $anonymised = $bc->get_plan()->get_setting('anonymize')->get_value();
     $filename = backup_plan_dbops::get_default_backup_filename($format, $type, $id, $users, $anonymised);

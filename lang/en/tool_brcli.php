@@ -22,6 +22,7 @@ $string['helpoptionbck'] =
 Options:
 --categoryid=INTEGER        Category ID for backup.
 --destination=STRING        Path where to store backup file. 
+--withoutusers              Backup without Users
 -h, --help                  Print out this help.
 
 Example:
